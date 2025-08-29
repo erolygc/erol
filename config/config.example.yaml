@@ -1,0 +1,291 @@
+# AI Trading Bot - Configuration Example
+# Copy this file to config.yaml and update with your actual values
+
+# Database Configuration
+database:
+  postgresql:
+    host: localhost
+    port: 5432
+    database: trading_bot
+    username: trading_user
+    password: your_password_here
+    pool_size: 20
+    max_overflow: 30
+  
+  redis:
+    host: localhost
+    port: 6379
+    password: your_redis_password_here
+    db: 0
+    max_connections: 50
+
+# Exchange API Configuration
+exchanges:
+  binance:
+    api_key: your_binance_api_key_here
+    api_secret: your_binance_secret_key_here
+    testnet: true  # Set to false for production
+    rate_limit: 1200  # requests per minute
+    
+  gate_io:
+    api_key: your_gate_io_api_key_here
+    api_secret: your_gate_io_secret_key_here
+    testnet: true
+    rate_limit: 1000
+
+# Trading Configuration
+trading:
+  # Risk Management
+  max_position_size: 0.1  # 10% of portfolio
+  max_daily_risk: 0.02    # 2% daily risk
+  stop_loss_multiplier: 2.0
+  take_profit_multiplier: 4.0
+  
+  # Leverage Settings
+  max_leverage: 5
+  default_leverage: 1
+  
+  # Trading Pairs
+  symbols:
+    - "BTCUSDT"
+    - "ETHUSDT"
+    - "BNBUSDT"
+    - "ADAUSDT"
+    - "DOTUSDT"
+  
+  # Timeframes
+  timeframes:
+    - "1m"
+    - "5m"
+    - "15m"
+    - "1h"
+    - "4h"
+    - "1d"
+
+# Machine Learning Configuration
+ml:
+  # Model Settings
+  models:
+    lstm:
+      sequence_length: 60
+      hidden_size: 128
+      num_layers: 2
+      dropout: 0.2
+      learning_rate: 0.001
+    
+    xgboost:
+      max_depth: 6
+      learning_rate: 0.1
+      n_estimators: 100
+      subsample: 0.8
+      colsample_bytree: 0.8
+    
+    ensemble:
+      weights:
+        lstm: 0.4
+        xgb: 0.4
+        technical: 0.2
+  
+  # Feature Engineering
+  features:
+    technical_indicators:
+      - "rsi"
+      - "macd"
+      - "bollinger_bands"
+      - "stochastic"
+      - "atr"
+      - "adx"
+      - "cci"
+      - "williams_r"
+      - "obv"
+      - "mfi"
+    
+    orderbook_features:
+      - "bid_ask_imbalance"
+      - "spread"
+      - "depth_imbalance"
+      - "large_orders"
+    
+    sentiment_features:
+      - "twitter_sentiment"
+      - "telegram_sentiment"
+      - "news_sentiment"
+      - "social_volume"
+  
+  # Training Settings
+  training:
+    train_split: 0.7
+    validation_split: 0.15
+    test_split: 0.15
+    batch_size: 32
+    epochs: 100
+    early_stopping_patience: 10
+
+# Data Collection Configuration
+data_collection:
+  # Historical Data
+  historical:
+    start_date: "2020-01-01"
+    end_date: "2024-01-01"
+    batch_size: 1000
+  
+  # Real-time Data
+  realtime:
+    websocket_enabled: true
+    reconnect_attempts: 5
+    heartbeat_interval: 30
+  
+  # Social Media
+  social_media:
+    twitter:
+      api_key: your_twitter_api_key_here
+      api_secret: your_twitter_secret_here
+      access_token: your_twitter_access_token_here
+      access_token_secret: your_twitter_access_secret_here
+      keywords:
+        - "bitcoin"
+        - "crypto"
+        - "btc"
+        - "eth"
+    
+    telegram:
+      bot_token: your_telegram_bot_token_here
+      channels:
+        - "binance_signals"
+        - "crypto_alerts"
+    
+    reddit:
+      client_id: your_reddit_client_id_here
+      client_secret: your_reddit_secret_here
+      subreddits:
+        - "cryptocurrency"
+        - "bitcoin"
+        - "cryptomarkets"
+
+# Notification Configuration
+notifications:
+  telegram:
+    enabled: true
+    bot_token: your_telegram_bot_token_here
+    chat_id: your_chat_id_here
+    
+  email:
+    enabled: false
+    smtp_server: smtp.gmail.com
+    smtp_port: 587
+    username: your_email@gmail.com
+    password: your_email_password_here
+    recipients:
+      - "admin@example.com"
+  
+  # Alert Settings
+  alerts:
+    signal_generated: true
+    position_opened: true
+    position_closed: true
+    stop_loss_hit: true
+    take_profit_hit: true
+    error_occurred: true
+
+# Dashboard Configuration
+dashboard:
+  host: "0.0.0.0"
+  port: 8501
+  debug: false
+  theme: "dark"
+  
+  # Dashboard Features
+  features:
+    real_time_charts: true
+    performance_metrics: true
+    position_tracking: true
+    signal_history: true
+    risk_metrics: true
+
+# Logging Configuration
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file: "logs/trading_bot.log"
+  max_size: "100MB"
+  backup_count: 5
+  
+  # Log Categories
+  categories:
+    trading: "INFO"
+    data_collection: "INFO"
+    ml_models: "INFO"
+    api_calls: "WARNING"
+    errors: "ERROR"
+
+# Performance Monitoring
+monitoring:
+  # Metrics Collection
+  metrics:
+    enabled: true
+    port: 9090
+    interval: 60  # seconds
+  
+  # Health Checks
+  health_checks:
+    database: true
+    api_connections: true
+    model_performance: true
+    data_freshness: true
+  
+  # Alerts
+  alerts:
+    high_latency: 1000  # ms
+    low_accuracy: 0.8
+    data_delay: 300  # seconds
+
+# Security Configuration
+security:
+  # API Key Encryption
+  encryption:
+    algorithm: "AES256"
+    key_file: "config/encryption.key"
+  
+  # Access Control
+  access_control:
+    ip_whitelist:
+      - "127.0.0.1"
+      - "192.168.1.0/24"
+    require_2fa: false
+  
+  # Rate Limiting
+  rate_limiting:
+    requests_per_minute: 1000
+    burst_limit: 100
+
+# Development Configuration
+development:
+  debug: true
+  test_mode: true
+  mock_data: false
+  hot_reload: true
+  
+  # Testing
+  testing:
+    backtest_enabled: true
+    paper_trading: true
+    live_trading: false
+
+# Production Configuration
+production:
+  debug: false
+  test_mode: false
+  mock_data: false
+  hot_reload: false
+  
+  # High Availability
+  ha:
+    enabled: true
+    failover: true
+    load_balancer: true
+  
+  # Backup
+  backup:
+    enabled: true
+    schedule: "0 2 * * *"  # Daily at 2 AM
+    retention_days: 30
